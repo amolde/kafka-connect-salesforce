@@ -1,3 +1,4 @@
 /target/
 .idea/
-kafka-connect-salesforce.iml
+*.iml
+.okhttpcache
