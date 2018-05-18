@@ -200,7 +200,13 @@ public class SalesforceSourceTask extends SourceTask {
 
     }
 
-    return records;
+    if (records.isEmpty()) {
+      // https://kafka.apache.org/11/javadoc/org/apache/kafka/connect/source/SourceTask.html#poll--
+      // docs say we should return null if there are no records, so that it will pause (not convinced need to)
+      return null;
+    } else {
+      return records;
+    }
   }
 
   @Override
