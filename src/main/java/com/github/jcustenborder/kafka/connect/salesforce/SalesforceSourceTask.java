@@ -51,8 +51,15 @@ import java.util.concurrent.ConcurrentMap;
 
 
 public class SalesforceSourceTask extends SourceTask {
+  final int DEFAULT_BATCH_SIZE = 1014;
+  /**
+   * By deafult, pause for 100ms between polling the in memory queue
+   * https://kafka.apache.org/11/javadoc/org/apache/kafka/connect/source/SourceTask.html#poll--
+   */
+  final int DEFAULT_POLL_TIMEOUT = 100;
+
   static final Logger log = LoggerFactory.getLogger(SalesforceSourceTask.class);
-  final SourceRecordConcurrentLinkedDeque messageQueue = new SourceRecordConcurrentLinkedDeque();
+  final SourceRecordConcurrentLinkedDeque messageQueue = new SourceRecordConcurrentLinkedDeque(DEFAULT_BATCH_SIZE, DEFAULT_POLL_TIMEOUT);
   SalesforceSourceConnectorConfig config;
   SalesforceRestClient salesforceRestClient;
   AuthenticationResponse authenticationResponse;
